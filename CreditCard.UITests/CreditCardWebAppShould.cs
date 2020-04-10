@@ -8,8 +8,8 @@ namespace CreditCard.UITests
 {
     public class CreditCardWebAppShould
     {
-        const string HomeUrl = "http://localhost:44108/";
-        const string AboutUrl = "http://localhost:44108/Home/About";
+        private const string HomeUrl = "http://localhost:44108/";
+        private const string AboutUrl = "http://localhost:44108/Home/About";
 
         const string HomeTitle = "Home Page - Credit Cards";
 
@@ -85,5 +85,20 @@ namespace CreditCard.UITests
             }
         }
 
+        [Fact]      
+        public void DisplayProductsAndRates()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement firstTableCell = driver.FindElement(By.TagName("td"));
+                string firstProduct = firstTableCell.Text;
+
+                Assert.Equal("Easy Credit Card", firstProduct);
+
+                //TODO: Check rest of product table
+            }
+        }
     }
 }
