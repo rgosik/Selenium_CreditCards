@@ -1,2 +1,2 @@
 # Selenium_CreditCards
-Project made to practice Selenium WebDriver
+Project made to practice Selenium WebDriver in C#
