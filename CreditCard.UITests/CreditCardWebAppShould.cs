@@ -48,13 +48,18 @@ namespace CreditCard.UITests
             using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(HomeUrl);
+
+                //IWebElement generationTokenElement = driver.FindElement(By.Id("GenerationToken"));
+                string initialToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
                 driver.Navigate().GoToUrl(AboutUrl);
                 driver.Navigate().Back();
 
                 Assert.Equal(HomeTitle, driver.Title);
                 Assert.Equal(HomeUrl, driver.Url);
 
-                //TODO: assert that page was reloaded
+                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
+                Assert.NotEqual(initialToken, reloadedToken);
             }
         }
 
@@ -66,13 +71,17 @@ namespace CreditCard.UITests
             {
                 driver.Navigate().GoToUrl(AboutUrl);
                 driver.Navigate().GoToUrl(HomeUrl);
+
+                string initalToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
                 driver.Navigate().Back();
                 driver.Navigate().Forward();
 
                 Assert.Equal(HomeTitle, driver.Title);
                 Assert.Equal(HomeUrl, driver.Url);
 
-                //TODO: assert that page was reloaded
+                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
+                Assert.NotEqual(initalToken, reloadedToken);
             }
         }
 
