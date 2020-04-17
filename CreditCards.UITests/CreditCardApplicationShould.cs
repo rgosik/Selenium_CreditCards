@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Xunit.Abstractions;
 
-namespace CreditCard.UITests
+namespace CreditCards.UITests
 {
     [Trait("Category", "Applications")]
     public class CreditCardApplicationShould
@@ -67,6 +67,7 @@ namespace CreditCard.UITests
             using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(HomeUrl);
+                driver.Manage().Window.Minimize();
 
                 WebDriverWait wait =
                     new WebDriverWait(driver, TimeSpan.FromSeconds(11));
@@ -75,7 +76,8 @@ namespace CreditCard.UITests
                     wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
                 applyLink.Click();
 
-
+                Assert.Equal(ApplyUrl, driver.Url);
+                Assert.Equal(ApplyTitle, driver.Title);
             }
         }
 
