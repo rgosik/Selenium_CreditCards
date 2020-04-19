@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Xunit.Abstractions;
+using CreditCards.UITests.PageObjectModels;
 
 namespace CreditCards.UITests
 {
@@ -27,13 +28,12 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
-                IWebElement applyLink = driver.FindElement(By.Name("ApplyLowRate"));
-                applyLink.Click();
+                ApplicationPage applicationPage = homePage.ClickApplyLowRateLink();
 
-                Assert.Equal(ApplyTitle, driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
+                applicationPage.EnsurePageLoaded();
             }
         }
 
@@ -42,42 +42,14 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
-                IWebElement carouselNext =
-                    driver.FindElement(By.CssSelector("[data-slide='next']"));
-                carouselNext.Click();
+                homePage.WaitForEasyApplicationCarosuelPage();
 
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
-                IWebElement applyLink =
-                    wait.Until((d) => d.FindElement(By.LinkText("Easy: Apply Now!")));
-                applyLink.Click();
+                ApplicationPage applicationPage = homePage.ClickEasyApplicationLink();
 
-                //IWebElement applyLink = driver.FindElement(By.LinkText("Easy: Apply Now!"));
-                //applyLink.Click();
-
-                Assert.Equal(ApplyTitle, driver.Title);
-                Assert.Equal(ApplyUrl, driver.Url);
-            }
-        }
-
-        [Fact]
-        public void BeInitiatedFromHomePage_EasyApplication_Prebuilt_Conditions()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-                driver.Manage().Window.Minimize();
-
-                WebDriverWait wait =
-                    new WebDriverWait(driver, TimeSpan.FromSeconds(11));
-
-                IWebElement applyLink =
-                    wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
-                applyLink.Click();
-
-                Assert.Equal(ApplyUrl, driver.Url);
-                Assert.Equal(ApplyTitle, driver.Title);
+                applicationPage.EnsurePageLoaded();
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,5 +46,25 @@ namespace CreditCards.UITests.PageObjectModels
 
         public bool IsCookieMessagePresent() => Driver.FindElements(By.Id("CookiesBeingUsed")).Any();
 
+        public ApplicationPage ClickEasyApplicationLink()
+        {
+            Driver.FindElement(By.LinkText("Easy: Apply Now!")).Click();
+            return new ApplicationPage(Driver);
+        }
+
+        public ApplicationPage ClickApplyLowRateLink()
+        {
+            Driver.FindElement(By.Name("ApplyLowRate")).Click();
+            return new ApplicationPage(Driver);
+        }
+
+        public void WaitForEasyApplicationCarosuelPage()
+        {
+            WebDriverWait wait =
+                new WebDriverWait(Driver, TimeSpan.FromSeconds(11));
+
+            IWebElement applyLink =
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
+        }
     }
 }
