@@ -11,6 +11,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6D6D6590-F658-4F37-AC91-09663A1C9F54}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <LangVersion>8.0</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CreditCards.UITests</RootNamespace>
     <AssemblyName>CreditCards.UITests</AssemblyName>
@@ -24,14 +25,17 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
+    <LangVersion>8.0</LangVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
+    <LangVersion>8.0</LangVersion>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -106,11 +110,23 @@
     <Compile Include="CreditCardApplicationShould.cs" />
     <Compile Include="CreditCardWebAppShould.cs" />
     <Compile Include="JavaScriptExamples.cs" />
+    <Compile Include="PageObjectModels\BasePage.cs" />
+    <Compile Include="PageObjectModels\ApplicationPage.cs" />
     <Compile Include="PageObjectModels\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />

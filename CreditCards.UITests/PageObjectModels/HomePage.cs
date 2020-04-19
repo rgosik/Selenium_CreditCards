@@ -6,15 +6,14 @@ using System.Linq;
 
 namespace CreditCards.UITests.PageObjectModels
 {
-    class HomePage
+    class HomePage : BasePage
     {
-        private readonly IWebDriver Driver;
-        private const string PageUrl = "http://localhost:44108/";
-        private const string PageTitle = "Home Page - Credit Cards";
+        public override string PageUrl => "http://localhost:44108/";
+        public override string PageTitle => "Home Page - Credit Cards";
 
         public HomePage(IWebDriver driver)
-        {
-            Driver = driver;
+            : base(driver)
+        {       
         }
 
         public ReadOnlyCollection<(string name, string interestRate)> Products
@@ -45,32 +44,6 @@ namespace CreditCards.UITests.PageObjectModels
         public void ClickLearnAboutUsLink() => Driver.FindElement(By.Id("LearnAboutUs")).Click();
 
         public bool IsCookieMessagePresent() => Driver.FindElements(By.Id("CookiesBeingUsed")).Any();
-
-        public void NavigateTo()
-        {
-            Driver.Navigate().GoToUrl(PageUrl);
-            EnsurePageLoaded();
-        }
-
-        public void EnsurePageLoaded(bool onlyCheckUrlStartsWIthExpectedText = true)
-        {
-            bool urlIsCorrect;
-            if (onlyCheckUrlStartsWIthExpectedText)
-            {
-                urlIsCorrect = Driver.Url.StartsWith(PageUrl);
-            }
-            else
-            {
-                urlIsCorrect = Driver.Url == PageUrl;
-            }
-
-
-            bool pageHasLoaded = urlIsCorrect && (Driver.Title == PageTitle);
-            if (!pageHasLoaded)
-            {
-                throw new Exception($"Failed to load page. Page URL = '{Driver.Url}' Page Source: \r\n {Driver.PageSource}");
-            }
-        }
 
     }
 }

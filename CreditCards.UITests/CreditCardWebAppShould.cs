@@ -14,10 +14,7 @@ namespace CreditCards.UITests
 {
     public class CreditCardWebAppShould
     {
-        private const string HomeUrl = "http://localhost:44108/";
         private const string AboutUrl = "http://localhost:44108/Home/About";
-
-        const string HomeTitle = "Home Page - Credit Cards";
 
         [Fact]
         [Trait("Category", "Smoke")]
