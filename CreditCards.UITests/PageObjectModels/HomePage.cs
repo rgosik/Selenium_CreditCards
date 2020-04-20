@@ -7,10 +7,10 @@ using System.Linq;
 
 namespace CreditCards.UITests.PageObjectModels
 {
-    class HomePage : BasePage
+    class HomePage : Page
     {
-        public override string PageUrl => "http://localhost:44108/";
-        public override string PageTitle => "Home Page - Credit Cards";
+        protected sealed override string PageUrl => "http://localhost:44108/";
+        protected sealed override string PageTitle => "Home Page - Credit Cards";
 
         public HomePage(IWebDriver driver)
             : base(driver)
@@ -46,7 +46,7 @@ namespace CreditCards.UITests.PageObjectModels
 
         public bool IsCookieMessagePresent() => Driver.FindElements(By.Id("CookiesBeingUsed")).Any();
 
-        public ApplicationPage ClickEasyApplicationLink()
+        public ApplicationPage ClickApplyEasyApplicationLink()
         {
             Driver.FindElement(By.LinkText("Easy: Apply Now!")).Click();
             return new ApplicationPage(Driver);
@@ -58,13 +58,40 @@ namespace CreditCards.UITests.PageObjectModels
             return new ApplicationPage(Driver);
         }
 
+
+        public ApplicationPage ClickCustomerServiceApplicationLink()
+        {
+            Driver.FindElement(By.ClassName("customer-service-apply-now")).Click();
+
+            return new ApplicationPage(Driver);
+        }
+
+        public ApplicationPage ClickRandomGreetingApplyLink()
+        {
+            IWebElement randomGreetingApplyLink = Driver.FindElement(By.PartialLinkText("- Apply Now!"));
+            randomGreetingApplyLink.Click();
+            return new ApplicationPage(Driver);
+        }
+
+        public ApplicationPage ClickRandomGreetingApplyLinkXPath()
+        {
+            IWebElement randomGreetingApplyLink = Driver.FindElement(By.XPath("//a[text()[contains(.,' - Apply Now!')]]"));
+            randomGreetingApplyLink.Click();
+            return new ApplicationPage(Driver);
+        }
+
         public void WaitForEasyApplicationCarosuelPage()
         {
             WebDriverWait wait =
                 new WebDriverWait(Driver, TimeSpan.FromSeconds(11));
 
-            IWebElement applyLink =
                 wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
+        }
+
+        public void WaitForCustomerServiceCarouselPage()
+        {
+            WebDriverWait wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(22));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("customer-service-apply-now")));
         }
     }
 }

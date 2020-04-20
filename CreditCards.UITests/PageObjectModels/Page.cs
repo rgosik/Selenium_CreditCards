@@ -3,16 +3,22 @@ using System;
 
 namespace CreditCards.UITests.PageObjectModels
 {
-    abstract class BasePage
+    abstract class Page
     {
-        public abstract string PageUrl { get; }
-        public abstract string PageTitle { get; }
-        public readonly IWebDriver Driver;
+        protected abstract string PageUrl { get; }
+        protected abstract string PageTitle { get; }
+        protected readonly IWebDriver Driver;
 
-        public BasePage(IWebDriver driver)
+        public Page(IWebDriver driver)
         {
             Driver = driver;
         }
+
+        /// <summary>
+        /// Checks that the URL and page title are as expected
+        /// </summary>
+        /// <param name="onlyCheckUrlStartsWithExpectedText">Set to false to do an exact match of URL.
+        /// Set to true to ignore fragments, query string, etc at end of browser URL</param>
 
         public void EnsurePageLoaded(bool onlyCheckUrlStartsWithExpectedText = true)
         {
